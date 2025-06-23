@@ -1,0 +1,48 @@
+# Rust
+/target/
+Cargo.lock
+
+# Node
+node_modules/
+*.log
+
+# React build
+front-end/build/
+
+# OpenAPI/Generated
+/openapi.json
+/openapitools.json
+ts-client/
+front-end/src/api/node_modules/
+front-end/src/api/.openapi-generator/
+front-end/src/api/.openapi-generator-ignore
+front-end/src/api/git_push.sh
+front-end/src/api/test-client.js
+front-end/src/api/README.md
+front-end/src/api/docs/
+front-end/src/api/package-lock.json
+front-end/src/api/package.json
+
+# Ignore .env
+.env
+
+# Ignore IDE/editor files
+*.swp
+*.swo
+*.idea/
+*.vscode/
+.DS_Store
+
+# Ignore build artifacts
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore coverage
+coverage/
+
+# Ignore misc
+*.bak
+*.tmp 
