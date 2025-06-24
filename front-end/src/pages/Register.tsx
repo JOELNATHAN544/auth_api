@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthApi, Configuration } from '../api';
-import styled, { keyframes } from 'styled-components';
 
-console.log('API Base Path:', process.env.REACT_APP_API_URL);
 const authApi = new AuthApi(new Configuration({ basePath: process.env.REACT_APP_API_URL }));
 
 export default function Register() {
-  console.log("Register component rendered");
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,7 +14,6 @@ export default function Register() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Register form submitted");
     setError('');
     try {
       await authApi.register({
@@ -28,23 +24,19 @@ export default function Register() {
       });
       navigate('/login');
     } catch (err) {
-      console.error('Registration error:', err);
       setError('Registration failed. Please try again.');
     }
   };
 
   return (
-    <Background>
-      {/* Soft glowing particles */}
-      <Particle top="10%" left="5%" size="180px" color="#8B5CF6" />
-      <Particle top="70%" left="80%" size="140px" color="#58A6FF" />
-      <Particle top="50%" left="40%" size="120px" color="#2DD4BF" />
-      <GlassCard>
-        <Title>Create Account</Title>
-        <Form onSubmit={handleRegister}>
-          <div>
-            <Label>First Name</Label>
-            <Input
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Create Account</h2>
+        <form onSubmit={handleRegister}>
+          <div className="form-group">
+            <label className="form-label">First Name</label>
+            <input
+              className="form-input"
               type="text"
               value={firstName}
               onChange={e => setFirstName(e.target.value)}
@@ -52,9 +44,10 @@ export default function Register() {
               required
             />
           </div>
-          <div>
-            <Label>Last Name</Label>
-            <Input
+          <div className="form-group">
+            <label className="form-label">Last Name</label>
+            <input
+              className="form-input"
               type="text"
               value={lastName}
               onChange={e => setLastName(e.target.value)}
@@ -62,9 +55,10 @@ export default function Register() {
               required
             />
           </div>
-          <div>
-            <Label>Email</Label>
-            <Input
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              className="form-input"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -72,9 +66,10 @@ export default function Register() {
               required
             />
           </div>
-          <div>
-            <Label>Password</Label>
-            <Input
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              className="form-input"
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -86,49 +81,11 @@ export default function Register() {
           <button type="submit" className="btn btn-primary">
             Register
           </button>
-        </Form>
+        </form>
         <a href="/login" className="auth-link">
           Already have an account? Login
         </a>
-      </GlassCard>
-    </Background>
+      </div>
+    </div>
   );
-}
-
-// --- Styled Components ---
-const Background = styled.div`
-  position: relative;
-  min-height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background: #0f172a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-interface ParticleProps {
-  top: string;
-  left: string;
-  size: string;
-  color: string;
-}
-
-const Particle = styled.div<ParticleProps>`
-  position: absolute;
-  top: ${props => props.top};
-  left: ${props => props.left};
-  width: ${props => props.size};
-  height: ${props => props.size};
-  background: ${props => props.color};
-  border-radius: 50%;
-  opacity: 0.25;
-  filter: blur(24px);
-  z-index: 0;
-`;
-
-const GlassCard = styled.div``;
-const Title = styled.h2``;
-const Form = styled.form``;
-const Label = styled.label``;
-const Input = styled.input``; 
+} 
