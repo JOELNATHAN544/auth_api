@@ -1,12 +1,13 @@
-import { Configuration, AuthApi, ProtectedApi } from './api';
+import { Configuration } from './configuration';
+import { AuthApi, ProtectedApi } from './api';
 
 // Create API instances
 const authApi = new AuthApi(new Configuration({
-    basePath: process.env.REACT_APP_API_URL
+    basePath: 'http://localhost:3000',
 }));
 
 const protectedApi = new ProtectedApi(new Configuration({
-    basePath: process.env.REACT_APP_API_URL
+    basePath: 'http://localhost:3000',
 }));
 
 // Example login function
