@@ -46,3 +46,4 @@ coverage/
 # Ignore misc
 *.bak
 *.tmp 
+.vercel
