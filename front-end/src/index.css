@@ -193,3 +193,38 @@ code {
   right: 48px;
   z-index: 10;
 }
+
+/* Decorative bubbles for Register/Login */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(32px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+.bubble-top-left {
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 180px;
+  background: #8B5CF6;
+}
+.bubble-bottom-right {
+  bottom: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background: #58A6FF;
+}
+
+/* Register card width */
+.register-card {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Make Register button full width */
+.btn-block {
+  width: 100%;
+}
