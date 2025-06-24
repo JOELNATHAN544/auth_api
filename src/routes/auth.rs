@@ -14,7 +14,7 @@ use crate::{
 pub struct AuthApi;
 
 #[utoipa::path(
-    post,
+    post, 
     path = "/login",
     request_body = LoginRequest,
     responses(
