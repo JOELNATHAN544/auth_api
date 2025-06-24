@@ -29,8 +29,11 @@ export default function Register() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
+    <div className="auth-container" style={{ position: 'relative' }}>
+      {/* Decorative bubbles */}
+      <div className="bubble bubble-top-left" />
+      <div className="bubble bubble-bottom-right" />
+      <div className="auth-card register-card">
         <h2 className="auth-title">Create Account</h2>
         <form onSubmit={handleRegister}>
           <div className="form-group">
@@ -78,7 +81,7 @@ export default function Register() {
             />
           </div>
           {error && <div className="error-message">{error}</div>}
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary btn-block">
             Register
           </button>
         </form>
