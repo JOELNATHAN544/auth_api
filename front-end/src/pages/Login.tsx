@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthApi, Configuration } from '../api';
 import styled, { keyframes } from 'styled-components';
 
-const authApi = new AuthApi(new Configuration({ basePath: 'http://localhost:3000' }));
+const authApi = new AuthApi(new Configuration({ basePath: process.env.REACT_APP_API_URL }));
 
 // --- Styled Components ---
 const Background = styled.div`
