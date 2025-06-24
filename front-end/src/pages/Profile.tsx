@@ -1,12 +1,124 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProtectedApi, Configuration, User } from '../api';
+import styled, { keyframes } from 'styled-components';
 
 const protectedApi = new ProtectedApi(new Configuration({
   basePath: 'http://localhost:3000',
 }));
 
 const SESSION_DURATION_MS = 10 * 60 * 1000; // 10 minutes
+
+// --- Styled Components ---
+const Background = styled.div`
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(120deg, #0D1117 60%, #161B22 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+`;
+
+const GlassCard = styled.div`
+  background: rgba(22, 27, 34, 0.85);
+  box-shadow: 0 8px 32px 0 rgba(8, 16, 32, 0.37);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1.5px solid rgba(88, 166, 255, 0.12);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  z-index: 2;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const Title = styled.h2`
+  margin: 0;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #58A6FF;
+  letter-spacing: -1px;
+  font-family: 'Inter', sans-serif;
+`;
+
+const glow = keyframes`
+  0% { filter: brightness(1) drop-shadow(0 0 8px #58A6FF88); }
+  50% { filter: brightness(1.2) drop-shadow(0 0 16px #8B5CF6cc); }
+  100% { filter: brightness(1) drop-shadow(0 0 8px #58A6FF88); }
+`;
+
+const GradientButton = styled.button`
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.7rem 2rem;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  background: linear-gradient(90deg, #58A6FF 0%, #8B5CF6 100%);
+  box-shadow: 0 2px 16px 0 #2DD4BF44;
+  cursor: pointer;
+  animation: ${glow} 2.5s infinite;
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 32px 0 #8B5CF6aa, 0 2px 16px 0 #2DD4BF44;
+  }
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+`;
+
+const InfoGroup = styled.div`
+  margin-bottom: 0.7rem;
+`;
+
+const InfoLabel = styled.div`
+  font-size: 0.95rem;
+  color: #8B949E;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+`;
+
+const InfoValue = styled.div`
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+`;
+
+const Loading = styled.div`
+  color: #8B5CF6;
+  font-size: 1.3rem;
+  text-align: center;
+  font-weight: 700;
+  padding: 2rem 0;
+`;
+
+// Soft blurred glowing background shapes
+const Particle = styled.div<{top: string, left: string, size: string, color: string}>`
+  position: absolute;
+  top: ${p => p.top};
+  left: ${p => p.left};
+  width: ${p => p.size};
+  height: ${p => p.size};
+  background: ${p => p.color};
+  filter: blur(32px);
+  opacity: 0.35;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+`;
 
 export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
@@ -78,34 +190,38 @@ export default function Profile() {
 
   if (!user) {
     return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <div className="loading">Loading...</div>
-        </div>
-      </div>
+      <Background>
+        <Particle top="10%" left="5%" size="180px" color="#8B5CF6" />
+        <Particle top="70%" left="80%" size="140px" color="#58A6FF" />
+        <Particle top="50%" left="40%" size="120px" color="#2DD4BF" />
+        <GlassCard>
+          <Loading>Loading...</Loading>
+        </GlassCard>
+      </Background>
     );
   }
 
   return (
-    <div className="auth-container">
-      <div className="profile-card" style={{ maxWidth: 400, margin: 'auto', padding: 32, borderRadius: 16, boxShadow: '0 4px 24px rgba(0,0,0,0.08)', background: '#fff' }}>
-        <div className="profile-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h2 style={{ margin: 0, fontWeight: 700, fontSize: 28 }}>Profile</h2>
-          <button onClick={handleLogout} className="btn btn-danger" style={{ fontWeight: 600, fontSize: 16, padding: '8px 24px' }}>
-            Logout
-          </button>
-        </div>
-        <div className="profile-info" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div className="info-group" style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 14, color: '#888', fontWeight: 600, marginBottom: 4 }}>Email</div>
-            <div style={{ fontSize: 18, color: '#222', fontWeight: 500 }}>{user.email}</div>
-          </div>
-          <div className="info-group" style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 14, color: '#888', fontWeight: 600, marginBottom: 4 }}>User ID</div>
-            <div style={{ fontSize: 18, color: '#222', fontWeight: 500 }}>{user.id}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Background>
+      <Particle top="10%" left="5%" size="180px" color="#8B5CF6" />
+      <Particle top="70%" left="80%" size="140px" color="#58A6FF" />
+      <Particle top="50%" left="40%" size="120px" color="#2DD4BF" />
+      <GlassCard>
+        <Header>
+          <Title>Profile</Title>
+          <GradientButton onClick={handleLogout}>Logout</GradientButton>
+        </Header>
+        <Info>
+          <InfoGroup>
+            <InfoLabel>Email</InfoLabel>
+            <InfoValue>{user.email}</InfoValue>
+          </InfoGroup>
+          <InfoGroup>
+            <InfoLabel>User ID</InfoLabel>
+            <InfoValue>{user.id}</InfoValue>
+          </InfoGroup>
+        </Info>
+      </GlassCard>
+    </Background>
   );
 } 
