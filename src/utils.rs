@@ -1,42 +1,31 @@
+use std::env;
+use hex;
 use dotenvy::dotenv;
-use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64};
 
 #[derive(Debug, Clone)]
 pub struct Config {
+    pub database_url: String,
     pub jwt_salt: [u8; 16],
     pub jwt_secret: String,
-    pub jwt_expiration_secs: u32,
-} 
+    pub jwt_expiration_secs: i64,
+}
 
-pub fn load_env() -> Config {
-    dotenv().ok();
+impl Config {
+    pub fn load_env() -> Self {
+        dotenv().ok();
+        
+        let jwt_salt_hex = env::var("JWT_SALT_HEX").expect("JWT_SALT_HEX must be set");
+        let jwt_salt = hex::decode(&jwt_salt_hex).expect("JWT_SALT_HEX must be valid hex");
+        let jwt_salt: [u8; 16] = jwt_salt.try_into().expect("JWT_SALT_HEX must decode to 16 bytes");
 
-    let jwt_salt = std::env::var("JWT_SALT").expect("JWT_SALT environment variable is not set");
-    
-    // Decode base64-encoded salt
-    let jwt_salt_bytes = BASE64.decode(jwt_salt.as_bytes())
-        .expect("JWT_SALT must be a valid base64-encoded string");
-    
-    if jwt_salt_bytes.len() != 16 {
-        panic!("JWT_SALT must decode to exactly 16 bytes");
+        Self {
+            database_url: env::var("DATABASE_URL").expect("DATABASE_URL must be set"),
+            jwt_salt,
+            jwt_secret: env::var("JWT_SECRET").expect("JWT_SECRET must be set"),
+            jwt_expiration_secs: env::var("JWT_EXPIRATION_SECS")
+                .unwrap_or_else(|_| "3600".to_string())
+                .parse()
+                .expect("JWT_EXPIRATION_SECS must be a number"),
+        }
     }
-    
-    let mut jwt_salt = [0u8; 16];
-    jwt_salt.copy_from_slice(&jwt_salt_bytes[..16]);
-    
-    let jwt_secret = std::env
-        ::var("JWT_SECRET")
-        .expect("JWT_SECRET environment variable is not set");
-
-    let jwt_expiration_secs = std::env
-        ::var("JWT_EXPIRATION")
-        .expect("JWT_EXPIRATION environment variable is not set")
-        .parse::<u32>()
-        .expect("JWT_EXPIRATION must be a valid integer");
-
-    return Config {
-        jwt_salt,
-        jwt_secret,
-        jwt_expiration_secs,
-    };
 }
