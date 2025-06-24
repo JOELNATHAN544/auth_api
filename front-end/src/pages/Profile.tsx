@@ -4,7 +4,8 @@ import { ProtectedApi, Configuration, User } from '../api';
 import styled, { keyframes } from 'styled-components';
 
 const protectedApi = new ProtectedApi(new Configuration({
-  basePath: 'http://localhost:3000',
+  basePath: process.env.REACT_APP_API_URL,
+  accessToken: localStorage.getItem('token') || '',
 }));
 
 const SESSION_DURATION_MS = 10 * 60 * 1000; // 10 minutes
@@ -149,7 +150,7 @@ export default function Profile() {
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
           try {
-            const refreshRes = await fetch('http://localhost:3000/refresh', {
+            const refreshRes = await fetch(`${process.env.REACT_APP_API_URL}/refresh`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ refresh_token: refreshToken }),
