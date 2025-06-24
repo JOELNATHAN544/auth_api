@@ -96,8 +96,37 @@ export default function Register() {
 }
 
 // --- Styled Components ---
-const Background = styled.div``;
-const Particle = styled.div``;
+const Background = styled.div`
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+interface ParticleProps {
+  top: string;
+  left: string;
+  size: string;
+  color: string;
+}
+
+const Particle = styled.div<ParticleProps>`
+  position: absolute;
+  top: ${props => props.top};
+  left: ${props => props.left};
+  width: ${props => props.size};
+  height: ${props => props.size};
+  background: ${props => props.color};
+  border-radius: 50%;
+  opacity: 0.25;
+  filter: blur(24px);
+  z-index: 0;
+`;
+
 const GlassCard = styled.div``;
 const Title = styled.h2``;
 const Form = styled.form``;
