@@ -1,25 +1,27 @@
-use std::sync::{ Arc, Mutex };
-
-use axum::{ routing::{ get, post }, Router };
+use axum::{routing::get, Router};
+use sqlx::PgPool;
+use std::sync::Arc;
 use tower_http::cors::CorsLayer;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
+use axum::routing::post;
+
 
 pub mod middleware;
-pub mod models; 
-pub mod routes; 
+pub mod models;
+pub mod routes;
 pub mod utils;
 
-use crate::{ middleware::auth::auth_middleware, routes::{ auth, protected }, utils::load_env };
+use crate::{middleware::auth::auth_middleware, routes::{auth, protected}, utils::Config};
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct AppState {
-    pub config: Arc<utils::Config>,
-    pub users: Arc<Mutex<Vec<models::User>>>,
+    pub db: PgPool,
+    pub config: Arc<Config>,
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     #[derive(OpenApi)]
     #[openapi(
         info(title = "Auth API", description = "A simple auth API"),
@@ -28,7 +30,13 @@ async fn main() {
     )]
     struct ApiDoc;
 
-    let state = AppState { config: Arc::new(load_env()), users: Arc::new(Mutex::new(vec![])) };
+    let config = Arc::new(Config::load_env());
+    let pool = PgPool::connect(&config.database_url).await?;
+
+    let state = AppState {
+        db: pool,
+        config,
+    };
 
     let app = Router::new()
         .route("/admin", get(protected::admin_route))
@@ -40,6 +48,8 @@ async fn main() {
         .layer(CorsLayer::permissive())
         .with_state(state);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
     axum::serve(listener, app).await.unwrap();
+
+    Ok(())
 }
