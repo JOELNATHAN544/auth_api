@@ -19,7 +19,7 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios/index';
 import globalAxios from 'axios';
 
-export const BASE_PATH = (process.env.REACT_APP_API_URL || "http://localhost").replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost:3000".replace(/\/+$/, "");
 
 /**
  *
