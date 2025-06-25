@@ -34,16 +34,14 @@ export default function Register() {
       <div className="bubble bubble-top-left" />
       <div className="bubble bubble-bottom-right" />
       <div className="auth-card register-card">
-        <div className="card-header-flex">
-          <h2 className="auth-title">Create Account</h2>
-          <span className="profile-icon-inline">
-            <svg width="48" height="48" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="26" r="12" fill="#2DD4BF" />
-              <circle cx="46" cy="26" r="12" fill="#8B5CF6" />
-              <ellipse cx="35" cy="52" rx="22" ry="12" fill="#2DD4BF" fillOpacity="0.7" />
-            </svg>
-          </span>
+        <div className="icon-above-heading">
+          <svg width="100" height="100" viewBox="0 0 103 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="20" r="14" fill="#4A90E2" />
+            <circle cx="71" cy="20" r="14" fill="#4A90E2" />
+            <ellipse cx="51.5" cy="44.5" rx="34.5" ry="12.5" fill="#4A90E2" fillOpacity="0.7" />
+          </svg>
         </div>
+        <h2 className="auth-title">Create Account</h2>
         <form onSubmit={handleRegister}>
           <div className="form-group">
             <label className="form-label">First Name</label>
