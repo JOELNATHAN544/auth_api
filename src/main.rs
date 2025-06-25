@@ -1,10 +1,11 @@
 use axum::{routing::get, Router};
 use sqlx::PgPool;
 use std::sync::Arc;
-use tower_http::cors::CorsLayer;
+use tower_http::cors::{CorsLayer, Any};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 use axum::routing::post;
+use axum::http::header;
 
 
 pub mod middleware;
@@ -38,6 +39,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         config,
     };
 
+    let cors = CorsLayer::new()
+        .allow_origin(Any)
+        .allow_methods(Any)
+        .allow_headers([header::AUTHORIZATION, header::CONTENT_TYPE]);
+
     let app = Router::new()
         .route("/admin", get(protected::admin_route))
         .route("/me", get(protected::me_route))
@@ -45,7 +51,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .route("/login", post(auth::login))
         .route("/register", post(auth::register))
-        .layer(CorsLayer::permissive())
+        .layer(cors)
         .with_state(state);
 
     let port = std::env::var("PORT").unwrap_or_else(|_| "8080".to_string());
