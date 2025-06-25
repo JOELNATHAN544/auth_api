@@ -47,7 +47,16 @@ export default function Profile() {
         Logout
       </button>
       <div className="auth-card profile-card">
-        <h2 className="auth-title">Profile</h2>
+        <div className="card-header-flex">
+          <h2 className="auth-title">Profile</h2>
+          <span className="profile-icon-inline">
+            <svg width="48" height="48" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="26" r="12" fill="#8B5CF6" />
+              <circle cx="46" cy="26" r="12" fill="#58A6FF" />
+              <ellipse cx="35" cy="52" rx="22" ry="12" fill="#8B5CF6" fillOpacity="0.7" />
+            </svg>
+          </span>
+        </div>
         {error && <div className="error-message">{error}</div>}
         {user ? (
           <div className="profile-info-boxes">
