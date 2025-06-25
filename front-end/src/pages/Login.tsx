@@ -169,6 +169,14 @@ export default function Login() {
       <Particle top="10%" left="5%" size="180px" color="#8B5CF6" />
       <Particle top="70%" left="80%" size="140px" color="#58A6FF" />
       <Particle top="50%" left="40%" size="120px" color="#2DD4BF" />
+      {/* User icon for Login */}
+      <div className="profile-icon-container">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="26" r="12" fill="#58A6FF" />
+          <circle cx="46" cy="26" r="12" fill="#8B5CF6" />
+          <ellipse cx="35" cy="52" rx="22" ry="12" fill="#58A6FF" fillOpacity="0.7" />
+        </svg>
+      </div>
       <GlassCard>
         <Title>Welcome Back</Title>
         <Form onSubmit={handleLogin}>
