@@ -263,9 +263,17 @@ code {
 }
 
 .profile-icon-container {
+  display: none;
+}
+
+.card-header-flex {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 1.2rem;
-  margin-top: 1.2rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.profile-icon-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
