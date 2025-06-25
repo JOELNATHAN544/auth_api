@@ -45,9 +45,10 @@ export default function Profile() {
       <div className="auth-card profile-card">
         <div className="icon-above-heading">
           <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="35" cy="20" r="13" fill="#4A90E2"/>
-            <circle cx="65" cy="20" r="13" fill="#4A90E2"/>
-            <ellipse cx="50" cy="45" rx="32" ry="13" fill="#4A90E2"/>
+            <circle cx="30" cy="20" r="13" fill="#4A90E2"/>
+            <circle cx="70" cy="20" r="13" fill="#4A90E2"/>
+            <ellipse cx="30" cy="45" rx="20" ry="10" fill="#4A90E2"/>
+            <ellipse cx="70" cy="45" rx="20" ry="10" fill="#4A90E2"/>
           </svg>
         </div>
         <h2 className="auth-title">Profile</h2>
