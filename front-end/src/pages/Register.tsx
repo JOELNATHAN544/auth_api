@@ -34,7 +34,7 @@ export default function Register() {
       <div className="bubble bubble-top-left" />
       <div className="bubble bubble-bottom-right" />
       <div className="auth-card register-card">
-        <div className="icon-above-heading">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.5rem' }}>
           <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="30" cy="20" r="13" fill="#4A90E2"/>
             <circle cx="70" cy="20" r="13" fill="#4A90E2"/>
