@@ -170,7 +170,7 @@ export default function Login() {
       <Particle top="70%" left="80%" size="140px" color="#58A6FF" />
       <Particle top="50%" left="40%" size="120px" color="#2DD4BF" />
       <GlassCard>
-        <div className="icon-above-heading">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.5rem' }}>
           <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="30" cy="20" r="13" fill="#4A90E2"/>
             <circle cx="70" cy="20" r="13" fill="#4A90E2"/>
