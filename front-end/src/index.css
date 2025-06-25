@@ -113,12 +113,14 @@ code {
 }
 
 .error-message {
-  color: #ff6b6b;
-  background: #2d1a1a;
+  background: #7f1d1d;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  font-size: 1rem;
+  margin: 1.2rem 0 0.5rem 0;
+  font-weight: 500;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px 0 rgba(127, 29, 29, 0.15);
   text-align: center;
 }
 
@@ -131,6 +133,14 @@ code {
 .profile-card {
   min-width: 400px;
   min-height: 350px;
+  background: rgba(30, 41, 59, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.5px solid rgba(74, 144, 226, 0.18);
 }
 
 .profile-header {
@@ -156,6 +166,11 @@ code {
 .profile-info {
   margin-top: 32px;
   font-size: 1.2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-start;
 }
 
 .profile-name {
@@ -180,11 +195,13 @@ code {
 .profile-label {
   color: #94a3b8;
   margin-right: 8px;
+  font-size: 1.1rem;
 }
 
 .profile-value {
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.15rem;
 }
 
 .logout-btn {
@@ -192,4 +209,20 @@ code {
   top: 32px;
   right: 48px;
   z-index: 10;
+}
+
+.auth-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4A90E2;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.icon-above-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
