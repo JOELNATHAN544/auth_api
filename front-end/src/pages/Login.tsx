@@ -154,12 +154,12 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      const res = await authApi.login({ email, password });
-      localStorage.setItem('token', res.data.token);
+      const response = await authApi.login({ email, password });
+      localStorage.setItem('token', response.data.token);
       localStorage.setItem('loginTime', Date.now().toString());
       navigate('/profile');
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      setError('Invalid email or password.');
     }
   };
 
