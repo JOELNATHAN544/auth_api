@@ -228,3 +228,36 @@ code {
 .btn-block {
   width: 100%;
 }
+
+/* Profile info boxes styling */
+.profile-info-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 32px;
+}
+.profile-info-box {
+  background: rgba(30, 41, 59, 0.85);
+  border-radius: 12px;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 12px 0 #2DD4BF22;
+}
+.profile-label {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.profile-value {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.profile-missing {
+  color: #ff6b6b;
+  font-size: 1rem;
+  font-style: italic;
+}
