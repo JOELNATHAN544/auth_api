@@ -33,6 +33,14 @@ export default function Register() {
       {/* Decorative bubbles */}
       <div className="bubble bubble-top-left" />
       <div className="bubble bubble-bottom-right" />
+      {/* User icon for Register */}
+      <div className="profile-icon-container">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="26" r="12" fill="#2DD4BF" />
+          <circle cx="46" cy="26" r="12" fill="#8B5CF6" />
+          <ellipse cx="35" cy="52" rx="22" ry="12" fill="#2DD4BF" fillOpacity="0.7" />
+        </svg>
+      </div>
       <div className="auth-card register-card">
         <h2 className="auth-title">Create Account</h2>
         <form onSubmit={handleRegister}>
