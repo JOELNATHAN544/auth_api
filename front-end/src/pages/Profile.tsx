@@ -15,7 +15,12 @@ export default function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await protectedApi.meRoute();
+        const token = localStorage.getItem('token');
+        const res = await protectedApi.meRoute({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(res.data);
       } catch (err) {
         setError('Failed to fetch user info.');
@@ -49,8 +54,6 @@ export default function Profile() {
         {user ? (
           <div className="profile-info">
             <div><span className="profile-label">Email:</span> <span className="profile-value">{user.email}</span></div>
-            <div><span className="profile-label">First Name:</span> <span className="profile-value">{user.first_name}</span></div>
-            <div><span className="profile-label">Last Name:</span> <span className="profile-value">{user.last_name}</span></div>
             <div><span className="profile-label">User ID:</span> <span className="profile-value">{user.id}</span></div>
           </div>
         ) : (
