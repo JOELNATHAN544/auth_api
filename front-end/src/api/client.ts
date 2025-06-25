@@ -1,13 +1,12 @@
 import { Configuration } from './configuration';
 import { AuthApi, ProtectedApi } from './api';
-
 // Create API instances
 const authApi = new AuthApi(new Configuration({
-    basePath: 'http://localhost:3000',
+    basePath: 'http://localhost:3000'
 }));
 
 const protectedApi = new ProtectedApi(new Configuration({
-    basePath: 'http://localhost:3000',
+    basePath: 'http://localhost:3000'
 }));
 
 // Example login function
