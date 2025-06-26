@@ -86,12 +86,14 @@ pub async fn register(
     State(state): State<AppState>,
     Json(payload): Json<RegisterRequest>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    println!("[REGISTER] Attempting to register user: email={}, first_name={}, last_name={}", payload.email, payload.first_name, payload.last_name);
     let hashed_password = hash_with_salt(
         payload.password.as_bytes(),
         bcrypt::DEFAULT_COST,
         state.config.jwt_salt,
     )
     .map_err(|e| {
+        println!("[REGISTER] Password hash error: {}", e);
         (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(json!({ "error": e.to_string() })),
@@ -112,6 +114,7 @@ pub async fn register(
 
     match result {
         Ok(record) => {
+            println!("[REGISTER] Successfully registered user: email={}, id={}", record.email, record.id);
             let response = RegisterResponse {
                 id: record.id,
                 first_name: record.first_name,
@@ -120,13 +123,19 @@ pub async fn register(
             };
             Ok((StatusCode::CREATED, Json(response)))
         }
-        Err(sqlx::Error::Database(db_err)) if db_err.is_unique_violation() => Err((
-            StatusCode::CONFLICT,
-            Json(json!({"error": "User with this email already exists"})),
-        )),
-        Err(e) => Err((
-            StatusCode::INTERNAL_SERVER_ERROR,
-            Json(json!({"error": e.to_string()})),
-        )),
+        Err(sqlx::Error::Database(db_err)) if db_err.is_unique_violation() => {
+            println!("[REGISTER] Email already exists: {}", payload.email);
+            Err((
+                StatusCode::CONFLICT,
+                Json(json!({"error": "User with this email already exists"})),
+            ))
+        }
+        Err(e) => {
+            println!("[REGISTER] Database error: {}", e);
+            Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(json!({"error": e.to_string()})),
+            ))
+        }
     }
 }
