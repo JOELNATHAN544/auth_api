@@ -32,6 +32,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     struct ApiDoc;
 
     let config = Arc::new(Config::load_env());
+    println!("Using DATABASE_URL: {}", config.database_url);
     let pool = PgPool::connect(&config.database_url).await?;
 
     let state = AppState {
