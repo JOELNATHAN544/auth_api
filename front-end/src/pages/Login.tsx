@@ -187,6 +187,7 @@ export default function Login() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Enter your email"
+              autoComplete="email"
               required
             />
           </div>
@@ -197,6 +198,7 @@ export default function Login() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="Enter your password"
+              autoComplete="current-password"
               required
             />
           </div>
