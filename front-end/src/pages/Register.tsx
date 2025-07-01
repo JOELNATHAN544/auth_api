@@ -21,7 +21,7 @@ export default function Register() {
         last_name: lastName,
         email,
         password
-      });
+      }) as any;
       // Save token and login time, then redirect to profile
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('loginTime', Date.now().toString());
