@@ -16,13 +16,16 @@ export default function Register() {
     e.preventDefault();
     setError('');
     try {
-      await authApi.register({
+      const response = await authApi.register({
         first_name: firstName,
         last_name: lastName,
         email,
         password
       });
-      navigate('/login');
+      // Save token and login time, then redirect to profile
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('loginTime', Date.now().toString());
+      navigate('/profile');
     } catch (err) {
       setError('Registration failed. Please try again.');
     }
