@@ -115,13 +115,40 @@ pub async fn register(
     match result {
         Ok(record) => {
             println!("[REGISTER] Successfully registered user: email={}, id={}", record.email, record.id);
-            let response = RegisterResponse {
+            let user = User {
                 id: record.id,
-                first_name: record.first_name,
-                last_name: record.last_name,
-                email: record.email,
+                first_name: record.first_name.clone(),
+                last_name: record.last_name.clone(),
+                email: record.email.clone(),
+                password: String::new(),
+                role: crate::models::Role::User,
             };
-            Ok((StatusCode::CREATED, Json(response)))
+            let claims = Claims {
+                sub: user.email.clone(),
+                role: user.role.clone(),
+                exp: (chrono::Utc::now() + chrono::Duration::hours(24)).timestamp() as usize,
+            };
+            let token = encode(
+                &Header::default(),
+                &claims,
+                &EncodingKey::from_secret(state.config.jwt_secret.as_bytes()),
+            )
+            .map_err(|e| {
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(json!({ "error": e.to_string() })),
+                )
+            })?;
+            Ok((StatusCode::CREATED, Json(json!({
+                "token": token,
+                "user": {
+                    "id": user.id,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "email": user.email,
+                    "role": user.role,
+                }
+            }))))
         }
         Err(sqlx::Error::Database(db_err)) if db_err.is_unique_violation() => {
             println!("[REGISTER] Email already exists: {}", payload.email);
